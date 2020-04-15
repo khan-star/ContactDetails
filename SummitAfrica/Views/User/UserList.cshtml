@@ -1,0 +1,43 @@
+﻿@using SummitAfrica.Models;
+@model UserContactDetails
+@{
+    ViewData["Title"] = "UserList";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        UserDetailsList
+    </div>
+    <div class="panel-body">
+        <div>
+            <table class="table table-striped table-bordered" id="TblUserList">
+                <thead>
+                    <tr>
+                        <td>SNo</td>
+                        <td>FirstName</td>
+                        <td>LastName</td>
+                        <td>PhoneNumber</td>
+                        <td>Email</td>
+                        <td>Edit / Delete</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.UserDataTableList)
+                    {
+                    <tr>
+                        <td>@item.SNo</td>
+                        <td>@item.FirstName</td>
+                        <td>@item.LastName</td>
+                        <td>@item.PhoneNumber</td>
+                        <td>@item.Email</td>
+                        <td>
+                            <a onclick="Edit(@item.SNo)">Edit</a> |
+                            <a onclick="Delete(@item.SNo)">Delete</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

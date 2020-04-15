@@ -1,0 +1,119 @@
+﻿@using SummitAfrica.Models;
+@model UserContactDetails
+@{
+    ViewData["Title"] = "UserMainForm";
+}
+
+<h2>UserMainForm</h2>
+<div id="divUserMainForm">
+    <div id="divUserContact">
+        @{ await Html.RenderPartialAsync("UserContact", Model);}
+    </div>
+    <div id="divUserList">
+        @{ await Html.RenderPartialAsync("UserList", Model);}
+    </div>
+</div>
+
+@section Scripts{
+    <link href="~/lib/DataTables-1.10.18/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <script src="~/lib/DataTables-1.10.18/js/jquery.dataTables.js"></script>
+    <script src="~/lib/DataTables-1.10.18/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#TblUserList').DataTable();
+            Submit();
+        });
+
+        function Submit() {
+            $('#btnSubmit').click(function () {
+
+                var PhoneNumber = ($("#UserDataxml_PhoneNumber").val());
+                var regex = /^0(6|7|8){1}[0-9]{1}[0-9]{7}$/;
+
+                if ($("#UserDataxml_FirstName").val() == "") {
+                    alert("FirstName Must be Filled Out");
+                    return false;
+                }
+                if ($("#UserDataxml_LastName").val() == "") {
+                    alert("LastName Must be Filled Out");
+                    return false;
+                }
+                if ($("#UserDataxml_PhoneNumber").val() == "") {
+                    alert("PhoneNumber Must be Filled Out");
+                    return false;
+                }
+                else if(regex.test(PhoneNumber))
+                {
+                    
+                }
+                else {
+                    alert("please enter a valid phonenumber");
+                    return false;
+                }
+                if ($("#UserDataxml_Email").val() == "") {
+                    alert("Email Must be Filled Out");
+                    return false;
+                }
+
+                var SN = $('#UserDataxml_SNo').val();
+                var FName = $('#UserDataxml_FirstName').val();
+                var LName = $('#UserDataxml_LastName').val();
+                var PN = $('#UserDataxml_PhoneNumber').val();
+                var EM = $('#UserDataxml_Email').val();
+
+                var Userxml = { SNo: SN, FirstName: FName, LastName: LName, PhoneNumber: PN, Email: EM }
+                console.log(Userxml);
+
+                $.ajax({
+                    url: '@Url.Action("UserContact","User")',
+                    data: Userxml,
+                    success: function (resp) {
+                        console.log(resp);
+                        $('#divUserList').html(resp);
+                        $('#TblUserList').DataTable();
+                        $("#Myform")[0].reset() 
+                    },
+                    error: function () {
+                        alert("failed");
+                    }
+                });
+            });
+        }
+
+        function Edit(SNo) {
+            $.ajax({
+                url: '@Url.Action("Edit","User")',
+                data: { SN: SNo },
+                success: function (resp) {
+                    console.log(resp);
+                    $('#divUserContact').html(resp);
+                    Submit();
+                },
+                error: function () {
+                    alert("failed");
+                }
+            });
+        }
+
+        function Delete(SNo) {
+            $.ajax({
+                url: '@Url.Action("Delete","User")',
+                data: { SNo: SNo },
+                
+                success: function (resp) {
+                    alert("Are you Sure You Want to Delete");
+                    console.log(resp);
+                    
+                    $('#divUserList').html(resp);
+                    $('#TblUserList').DataTable();
+                    
+                },
+                error: function () {
+                    alert("failed");
+                }
+            });
+        }
+    </script>
+}
+

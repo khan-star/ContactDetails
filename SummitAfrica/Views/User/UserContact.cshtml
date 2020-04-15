@@ -1,0 +1,52 @@
+﻿@using SummitAfrica.Models;
+@model UserContactDetails
+@{
+    ViewData["Title"] = "UserContact";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        UserContactDetails
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <form method="post" id="Myform" onsubmit="return validateForm()">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @Html.HiddenFor(x => x.UserDataxml.SNo)
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.UserDataxml.FirstName, new { @class = "control-label" })
+                        @Html.TextBoxFor(x => x.UserDataxml.FirstName, new { @class = "form-control", @placeholder = "Enter Your FirstName" })
+                        <span asp-validation-for="UserDataxml.FirstName" id="FirstName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.UserDataxml.LastName, new { @class = "control-label" })
+                        @Html.TextBoxFor(x => x.UserDataxml.LastName, new { @class = "form-control", @placeholder = "Enter Your LastName" })
+                        <span asp-validation-for="UserDataxml.LastName" id="LastName" class="text-danger"></span>
+                    </div>
+                </div>                
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.UserDataxml.PhoneNumber, new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.UserDataxml.PhoneNumber, new { @class = "form-control", @placeholder = "Enter Your PhoneNumber" })
+                            <span asp-validation-for="UserDataxml.PhoneNumber" id="PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.UserDataxml.Email, new { @class = "control-label" })
+                            @Html.TextBoxFor(x => x.UserDataxml.Email, new { @class = "form-control", @placeholder = "Enter Your Email" })
+                            <span asp-validation-for="UserDataxml.Email" id="Email" class="text-danger"></span>
+                        </div>
+                    </div>                
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="button" value="Submit" id="btnSubmit" class="btn btn-default" />
+                        </div>
+                    </div>                
+            </form>
+        </div>
+     </div>
+</div>
+
